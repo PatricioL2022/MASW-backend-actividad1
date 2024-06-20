@@ -61,7 +61,7 @@ class Platform {
     {
         //$connectionDB = new ConnectionDB();
         $mysqli = $this->connectionDB->initConnectionDb();
-        $query = $mysqli->query("SELECT* FROM platform order by id asc");
+        $query = $mysqli->query("SELECT id,name FROM platform order by id asc");
         $listData = [];
         foreach ($query as $item)
         {
@@ -74,7 +74,7 @@ class Platform {
     public function getById($platformId)
     {
         $mysqli = $this->connectionDB->initConnectionDb();
-        $query = $mysqli->query("SELECT* FROM platform where id='$platformId'");
+        $query = $mysqli->query("SELECT id,name FROM platform where id='$platformId'");
         $itemObject = mysqli_fetch_object($query,Platform::class);
         $mysqli->close();
         return $itemObject;

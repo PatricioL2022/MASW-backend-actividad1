@@ -5,10 +5,7 @@
  * Date: 18/6/2024
  * Time: 23:25
  */
-echo '<link href="../partial/vendors/simplebar/css/simplebar.css" media="screen" rel="stylesheet" type="text/css" />';
-echo '<link href="../partial/css/vendors/simplebar.css" media="screen" rel="stylesheet" type="text/css" />';
-echo '<link href="../partial/css/style.css" media="screen" rel="stylesheet" type="text/css" />';
-echo '<link href="../partial/css/examples.css" media="screen" rel="stylesheet" type="text/css" />';
+
 include('../partial/sidebar.php');
 require_once('../../controllers/PlatformController.php');
 ?>
@@ -117,8 +114,6 @@ require_once('../../controllers/PlatformController.php');
 </div>
 
 <?php
-echo '<script src="../partial/vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>';
-echo '<script src="../partial/vendors/simplebar/js/simplebar.min.js"></script>';
 include('../partial/footer.php');
 ?>
 <script>

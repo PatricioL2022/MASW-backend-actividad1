@@ -11,10 +11,7 @@ require_once('../../controllers/PlatformController.php');
 $platformList = listPlatforms();
 ?>
 <?php
-echo '<link href="../partial/vendors/simplebar/css/simplebar.css" media="screen" rel="stylesheet" type="text/css" />';
-echo '<link href="../partial/css/vendors/simplebar.css" media="screen" rel="stylesheet" type="text/css" />';
-echo '<link href="../partial/css/style.css" media="screen" rel="stylesheet" type="text/css" />';
-echo '<link href="../partial/css/examples.css" media="screen" rel="stylesheet" type="text/css" />';
+
 include('../partial/sidebar.php');
 ?>
 <div class="wrapper d-flex flex-column min-vh-100 bg-light">
@@ -131,8 +128,6 @@ include('../partial/sidebar.php');
     </div>
 </div>
 <?php
-echo '<script src="../partial/vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>';
-echo '<script src="../partial/vendors/simplebar/js/simplebar.min.js"></script>';
 include('../partial/footer.php');
 ?>
 
