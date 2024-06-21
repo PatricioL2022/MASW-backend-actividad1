@@ -54,9 +54,6 @@ class Platform {
     {
         $this->name = $name;
     }
-
-
-
     public function getAll()
     {
         //$connectionDB = new ConnectionDB();
