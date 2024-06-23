@@ -91,23 +91,30 @@ include('../partial/sidebar.php');
                                                 <td><?php echo $serieItem->getPlatformname(); ?></td>
                                                 <td><?php echo $serieItem->getDirectorname(); ?></td>
                                                 <td><?php
-                                                        foreach ($serieItem->getActors() as $actorItem)
-                                                        {
-                                                            echo '<li>'.$actorItem->getActorname().'</li>';
+                                                        if($serieItem->getActors() != null){
+                                                            foreach ($serieItem->getActors() as $actorItem)
+                                                            {
+                                                                echo '<li>'.$actorItem->getActorname().'</li>';
+                                                            }
                                                         }
                                                     ?>
                                                 </td>
                                                 <td><?php
-                                                    foreach ($serieItem->getLanguageAudioAvailable() as $audioItem)
-                                                    {
-                                                        echo '<li>'.$audioItem->getLanguageName().'</li>';
-                                                    }
+                                                    if($serieItem->getLanguageAudioAvailable() != null)
+                                                        {
+                                                            foreach ($serieItem->getLanguageAudioAvailable() as $audioItem)
+                                                            {
+                                                                echo '<li>'.$audioItem->getLanguageName().'</li>';
+                                                            }
+                                                        }
                                                     ?>
                                                 </td>
                                                 <td><?php
-                                                    foreach ($serieItem->getLanguageSubtitleAvailable() as $subtitleItem)
-                                                    {
-                                                        echo '<li>'.$subtitleItem->getLanguageName().'</li>';
+                                                    if($serieItem->getLanguageSubtitleAvailable()!=null){
+                                                        foreach ($serieItem->getLanguageSubtitleAvailable() as $subtitleItem)
+                                                        {
+                                                            echo '<li>'.$subtitleItem->getLanguageName().'</li>';
+                                                        }
                                                     }
                                                     ?>
                                                 </td>

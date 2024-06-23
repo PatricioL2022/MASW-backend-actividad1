@@ -17,7 +17,7 @@ class ConnectionDB
     {
         $this->db_host = "localhost";
         $this->db_user = "root";
-        $this->db_password = "root";
+        $this->db_password = "";
         $this->db_name = "actividad1grupo4";
     }
 

@@ -223,5 +223,16 @@ private $languageSubtitleAvailable;
         $mysqli->close();
         return $itemObject;
     }
+    public function store()
+    {
+        $platformCreated = false;
+        $mysqli = $this->connectionDB->initConnectionDb();
+        if($resultInsert = $mysqli->query("insert into serie(title,platformid,directorid) values('$this->title',$this->platformid,$this->directorid)"))
+        {
+            $platformCreated = true;
+        }
+        $mysqli->close();
+        return $platformCreated;
+    }
 
 }

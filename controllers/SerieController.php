@@ -34,3 +34,8 @@ function getSerieById($serieId){
     $serieObject = $model->getById($serieId);
     return $serieObject;
 }
+function storeSerie($serieTitle,$platformId,$directorId){
+    $newSerie = new Serie(null,$serieTitle,$platformId,null,$directorId,null);
+    $serieCreated = $newSerie->store();
+    return $serieCreated;
+}

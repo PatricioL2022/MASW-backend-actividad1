@@ -8,6 +8,7 @@
 include('../partial/sidebar.php');
 require_once('../../controllers/SerieController.php');
 require_once('../../controllers/PlatformController.php');
+require_once('../../controllers/DirectorController.php');
 ?>
 
 <div class="wrapper d-flex flex-column min-vh-100 bg-light">
@@ -37,7 +38,9 @@ require_once('../../controllers/PlatformController.php');
                         </div>
                         <div class="card-body">
                             <?php
-                            $platforms= listPlatforms();
+                            $platformList= listPlatforms();
+                            $directorList = listDirector();
+
                             if(isset($_GET['serie'])){
                                 $SerieIdParameter = $_GET['serie'];
                                 $serie = getSerieById($SerieIdParameter);
@@ -46,17 +49,21 @@ require_once('../../controllers/PlatformController.php');
                             $textFail = '';
 
 
-                            /**$sendData = false;
-                            $platformCreated = false;
+                            $sendData = false;
+                            $serieCreated = false;
                             if(isset($_POST['createBtn']))
                             {
                                 $sendData = true;
                             }
                             if($sendData)
                             {
-                                if(isset($_POST['platformName']))
+                                if(isset($_POST['title']))
                                 {
-                                    if(isset($platform))
+                                    $title = $_POST['title'];
+                                    $directorId = $_POST['directorId'];
+                                    $platformId = $_POST['platformId'];
+                                    echo $title." - ".$directorId." - ".$platformId;
+                                    /**if(isset($platform))
                                     {
                                         $platformCreated = updatePlatform($platform->getId(),$_POST['platformName']);
                                         if($platformCreated)
@@ -64,39 +71,45 @@ require_once('../../controllers/PlatformController.php');
                                         else $textFail = 'La plataforma no se ha actualizado correctamente.';
                                     }
                                     else
-                                    {
-                                        $platformCreated = storePlatform($_POST['platformName']);
-                                        if($platformCreated)
-                                            $textSuccess = 'Plataforma creada correctamente.';
-                                        else $textFail = 'La plataforma no se ha creado correctamente.';
-                                    }
+                                    {*/
+                                        $serieCreated = storeSerie($title,$platformId,$directorId);
+                                        if($serieCreated)
+                                            $textSuccess = 'Serie creada correctamente.';
+                                        else $textFail = 'La serie no se ha creado correctamente.';
+                                    //}
 
                                 }
                             }
-                            if(!$sendData) {*/
+                            if(!$sendData) {
                                 ?>
                                 <form action="" method="post" class="row g-3 needs-validation" novalidate="">
 
 
                                     <div class="col-md-12">
                                         <label class="form-label" for="title">Título</label>
-                                        <input class="form-control" id="title" name="platformName" value="<?php if(isset($serie)) echo $serie->getTitle() ?>" type="text" required="" placeholder="Introduce el título">
+                                        <input class="form-control" id="title" name="title" value="<?php if(isset($serie)) echo $serie->getTitle() ?>" type="text" required="" placeholder="Introduce el título">
                                         <div class="invalid-feedback">Ingrese un título.</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" for="platformId">Plataforma</label>
-                                        <select class="js-example-basic-single js-states form-control" name="state">
+                                        <select id="platformId" name="platformId" class="js-example-basic-single form-control">
                                             <?php
-                                                foreach($platforms as $platform){
-                                                    echo  "<option value='$platform->getId()'>".$platform->getName()."</option>";
+                                                foreach($platformList as $platform){
+                                                    echo  "<option value='".$platform->getId()."'>".$platform->getName()."</option>";
                                                 }
                                             ?>
                                         </select>
                                         <div class="invalid-feedback">Ingrese un nombre.</div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label" for="platformName">Director</label>
-                                        <input class="form-control" id="platformName" name="platformName" value="<?php if(isset($serie)) echo $serie->getTitle() ?>" type="text" required="" placeholder="Introduce el nombre de la plataforma">
+                                        <label class="form-label" for="directorId">Director</label>
+                                        <select id="directorId" name="directorId" class="js-example-basic-single form-control">
+                                            <?php
+                                            foreach($directorList as $director){
+                                                echo  "<option value='".$director->getId()."'>".$director->getName().' '.$director->getLastName()."</option>";
+                                            }
+                                            ?>
+                                        </select>
                                         <div class="invalid-feedback">Ingrese un nombre.</div>
                                     </div>
                                     <div class="col-12">
@@ -104,25 +117,25 @@ require_once('../../controllers/PlatformController.php');
                                     </div>
                                 </form>
                                 <?php
-                            /**} else {
-                                if($platformCreated){*/
+                            } else {
+                                if($serieCreated){
                                     ?>
                                     <div class="row">
                                         <div class="alert alert-success" role="alert">
-                                            <?php //echo $textSuccess ?><br><a href="List.php">Volver al listado de plataformas</a>
+                                            <?php echo $textSuccess ?><br><a href="List.php">Volver al listado de plataformas</a>
                                         </div>
                                     </div>
                                     <?php
-                               // } else {
+                                } else {
                                     ?>
                                     <div class="row">
                                         <div class="alert alert-danger" role="alert">
-                                            <?php //echo $textFail ?><br><a href="Form.php">Volver a intentarlo</a>
+                                            <?php echo $textFail ?><br><a href="Form.php">Volver a intentarlo</a>
                                         </div>
                                     </div>
                                     <?php
-                               // }
-                            //}
+                                }
+                            }
                             ?>
                         </div>
                     </div>
@@ -153,8 +166,12 @@ include('../partial/footer.php');
         })
     })()
     $(document).ready(function() {
-        $('.js-example-basic-single').select2({
+        $('#platformId').select2({
             placeholder: "Seleccione una plataforma",
+            allowClear: true
+        });
+        $('#directorId').select2({
+            placeholder: "Seleccione un director",
             allowClear: true
         });
     });
