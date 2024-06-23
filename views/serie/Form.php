@@ -9,6 +9,8 @@ include('../partial/sidebar.php');
 require_once('../../controllers/SerieController.php');
 require_once('../../controllers/PlatformController.php');
 require_once('../../controllers/DirectorController.php');
+require_once('../../controllers/ActorController.php');
+require_once('../../controllers/LanguageController.php');
 ?>
 
 <div class="wrapper d-flex flex-column min-vh-100 bg-light">
@@ -40,6 +42,11 @@ require_once('../../controllers/DirectorController.php');
                             <?php
                             $platformList= listPlatforms();
                             $directorList = listDirector();
+                            $actorList = listActorforms();
+                            $languageList = listLanguage();
+
+                            $objectId = getSerieLastId();
+                            echo 'ID: '.$objectId->getId();
 
                             if(isset($_GET['serie'])){
                                 $SerieIdParameter = $_GET['serie'];
@@ -62,7 +69,13 @@ require_once('../../controllers/DirectorController.php');
                                     $title = $_POST['title'];
                                     $directorId = $_POST['directorId'];
                                     $platformId = $_POST['platformId'];
+                                    $arrayActorsId = $_POST['actorId'];
+                                    $arrayLanguageAudioId = $_POST['languageAudioId'];
+                                    $arrayLanguageSubtituloId = $_POST['languageSubtituloId'];
                                     echo $title." - ".$directorId." - ".$platformId;
+                                    foreach ($arrayLanguageAudioId as $actor){
+                                        echo 'actor: '.$actor.'<br>';
+                                    }
                                     /**if(isset($platform))
                                     {
                                         $platformCreated = updatePlatform($platform->getId(),$_POST['platformName']);
@@ -72,7 +85,7 @@ require_once('../../controllers/DirectorController.php');
                                     }
                                     else
                                     {*/
-                                        $serieCreated = storeSerie($title,$platformId,$directorId);
+                                        $serieCreated = storeSerie($title,$platformId,$directorId,$arrayActorsId,$arrayLanguageAudioId, $arrayLanguageSubtituloId);
                                         if($serieCreated)
                                             $textSuccess = 'Serie creada correctamente.';
                                         else $textFail = 'La serie no se ha creado correctamente.';
@@ -107,6 +120,39 @@ require_once('../../controllers/DirectorController.php');
                                             <?php
                                             foreach($directorList as $director){
                                                 echo  "<option value='".$director->getId()."'>".$director->getName().' '.$director->getLastName()."</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                        <div class="invalid-feedback">Ingrese un nombre.</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="actorId">Actor</label>
+                                        <select id="actorId" name="actorId[]" multiple="multiple" class="js-example-basic-single form-control">
+                                            <?php
+                                            foreach($actorList as $actor){
+                                                echo  "<option value='".$actor->getId()."'>".$actor->getName().' '.$actor->getLastname()."</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                        <div class="invalid-feedback">Ingrese un nombre.</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="languageAudioId">Audio</label>
+                                        <select id="languageAudioId" name="languageAudioId[]" multiple="multiple" class="js-example-basic-single form-control">
+                                            <?php
+                                            foreach($languageList as $language){
+                                                echo  "<option value='".$language->getId()."'>".$language->getName()."</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                        <div class="invalid-feedback">Ingrese un nombre.</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="languageSubtituloId">Subtítulo</label>
+                                        <select id="languageSubtituloId" name="languageSubtituloId[]" multiple="multiple" class="js-example-basic-single form-control">
+                                            <?php
+                                            foreach($languageList as $language){
+                                                echo  "<option value='".$language->getId()."'>".$language->getName()."</option>";
                                             }
                                             ?>
                                         </select>
@@ -172,6 +218,18 @@ include('../partial/footer.php');
         });
         $('#directorId').select2({
             placeholder: "Seleccione un director",
+            allowClear: true
+        });
+        $('#actorId').select2({
+            placeholder: "Seleccione un actor",
+            allowClear: true
+        });
+        $('#languageAudioId').select2({
+            placeholder: "Seleccione un idioma",
+            allowClear: true
+        });
+        $('#languageSubtituloId').select2({
+            placeholder: "Seleccione un idioma",
             allowClear: true
         });
     });

@@ -34,8 +34,32 @@ function getSerieById($serieId){
     $serieObject = $model->getById($serieId);
     return $serieObject;
 }
-function storeSerie($serieTitle,$platformId,$directorId){
-    $newSerie = new Serie(null,$serieTitle,$platformId,null,$directorId,null);
+function getSerieLastId(){
+    $model = new Serie();
+    $serieObject = $model->getLastId();
+    return $serieObject;
+}
+function storeSerie($serieTitle,$platformId,$directorId,$arrayActorsId,$arrayLanguageAudioId,$arrayLanguageSubtitleId){
+    $newSerie = new Serie(null,$serieTitle,intval($platformId),null,intval($directorId),null);
     $serieCreated = $newSerie->store();
+    $objectLastSerieId = getSerieLastId();
+    $lastSerieId = $objectLastSerieId->getId();
+    foreach ($arrayActorsId as $itemActorId)
+    {
+        $newSerieActor = new SerieActor(null,intval($lastSerieId),intval($itemActorId));
+        $newSerieActor->store();
+    }
+    foreach ($arrayLanguageAudioId as $itemLanguageId)
+    {
+        $newSerieAudio = new SerieAudio(null,intval($itemLanguageId),intval($lastSerieId));
+        $newSerieAudio->store();
+    }
+    foreach ($arrayLanguageSubtitleId as $itemLanguageId)
+    {
+        $newSerieSubtitle = new SerieSubtitle(null,intval($itemLanguageId),intval($lastSerieId));
+        $newSerieSubtitle->store();
+    }
+
+
     return $serieCreated;
 }

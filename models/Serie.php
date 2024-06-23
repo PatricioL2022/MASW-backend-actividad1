@@ -196,7 +196,7 @@ private $languageSubtitleAvailable;
     public function getAll()
     {
         $mysqli = $this->connectionDB->initConnectionDb();
-        $query = $mysqli->query("select s.id,s.title,p.name as platform,concat(d.name,' ',d.lastname) as director from serie s inner join platform p on s.platformid = p.id inner join director d on s.directorid = d.id order by s.id asc");
+        $query = $mysqli->query("select s.id,s.title,p.name as platform,concat(d.name,' ',d.lastname) as director from serie s inner join platform p on s.platformid = p.id inner join director d on s.directorid = d.id order by s.id desc");
         $listData = [];
         foreach ($query as $item)
         {
@@ -215,6 +215,23 @@ private $languageSubtitleAvailable;
         {
             $itemObject = new Serie($item['id'],$item['title'],$item['platformid'],$item['platformname'],$item['directorid'],$item['directorname']);
             array_push($listData,$itemObject);
+        }
+        $mysqli->close();
+        return $listData;*/
+
+        $itemObject = mysqli_fetch_object($query,Serie::class);
+        $mysqli->close();
+        return $itemObject;
+    }
+    public function getLastId()
+    {
+        $mysqli = $this->connectionDB->initConnectionDb();
+        $query = $mysqli->query("select nullif(max(id),1) as id from serie");
+        /**$listData = [];
+        foreach ($query as $item)
+        {
+        $itemObject = new Serie($item['id'],$item['title'],$item['platformid'],$item['platformname'],$item['directorid'],$item['directorname']);
+        array_push($listData,$itemObject);
         }
         $mysqli->close();
         return $listData;*/

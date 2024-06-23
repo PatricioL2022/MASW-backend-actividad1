@@ -112,6 +112,17 @@ class SerieAudio
         $mysqli->close();
         return $listData;
     }
+    public function store()
+    {
+        $serieAudioCreated = false;
+        $mysqli = $this->connectionDB->initConnectionDb();
+        if($resultInsert = $mysqli->query("insert into serieaudio(serieid,languageid) values($this->serieId,$this->languageId)"))
+        {
+            $serieAudioCreated = true;
+        }
+        $mysqli->close();
+        return $serieAudioCreated;
+    }
 
 
 }

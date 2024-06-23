@@ -112,4 +112,15 @@ class SerieSubtitle
         $mysqli->close();
         return $listData;
     }
+    public function store()
+    {
+        $serieSubtitleCreated = false;
+        $mysqli = $this->connectionDB->initConnectionDb();
+        if($resultInsert = $mysqli->query("insert into seriesubtitle(serieid,languageid) values($this->serieId,$this->languageId)"))
+        {
+            $serieSubtitleCreated = true;
+        }
+        $mysqli->close();
+        return $serieSubtitleCreated;
+    }
 }

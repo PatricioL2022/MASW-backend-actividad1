@@ -107,6 +107,17 @@ class SerieActor
         $mysqli->close();
         return $listData;
     }
+    public function store()
+    {
+        $serieActorCreated = false;
+        $mysqli = $this->connectionDB->initConnectionDb();
+        if($resultInsert = $mysqli->query("insert into serieactor(serieid, actorid) values($this->serieid,$this->actorid)"))
+        {
+            $serieActorCreated = true;
+        }
+        $mysqli->close();
+        return $serieActorCreated;
+    }
 
 
 }
