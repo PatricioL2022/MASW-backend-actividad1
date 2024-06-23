@@ -33,7 +33,7 @@
                 </svg> Plataforma</a>
 
         </li>
-        <li class="nav-item"><a class="nav-link" href="#">
+        <li class="nav-item"><a class="nav-link" href="../director/List.php">
                 <svg class="nav-icon">
                     <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-cursor"></use>
                 </svg> Director</a>
