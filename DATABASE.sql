@@ -41,16 +41,16 @@ create table serieactor(
 create table serieaudio(
     id int auto_increment primary key,
     serieid int,
-    languageavailableaudio int,
+    languageid int,
     foreign key(serieid) references serie(id) on update cascade on delete cascade,
-    foreign key(languageavailableaudio) references language(id) on update cascade on delete restrict
+    foreign key(languageid) references language(id) on update cascade on delete restrict
 );
 create table seriesubtitle(
     id int auto_increment primary key,
     serieid int,
-    languageavailablesubtitle int,
+    languageid int,
     foreign key(serieid) references serie(id) on update cascade on delete cascade,
-    foreign key(languageavailablesubtitle) references language(id) on update cascade on delete restrict
+    foreign key(languageid) references language(id) on update cascade on delete restrict
 );
 
 insert into platform(name) values
@@ -105,16 +105,16 @@ insert into serieactor(serieid,actorid) values(4,13),(4,12),(4,11),(4,10),(4,9),
 insert into serieactor(serieid,actorid) values(5,7),(5,6),(5,5),(5,4),(5,3),(5,2),(5,1);
 insert into serieactor(serieid,actorid) values(6,1),(6,2),(6,3),(6,4);
 
-insert into serieaudio(serieid,languageavailableaudio) values(1,1),(1,2);
-insert into serieaudio(serieid,languageavailableaudio) values(2,2),(2,3),(2,4);
-insert into serieaudio(serieid,languageavailableaudio) values(3,1),(3,5);
-insert into serieaudio(serieid,languageavailableaudio) values(4,6);
-insert into serieaudio(serieid,languageavailableaudio) values(5,6),(5,5),(5,4),(5,3);
-insert into serieaudio(serieid,languageavailableaudio) values(6,2),(6,1);
+insert into serieaudio(serieid,languageid) values(1,1),(1,2);
+insert into serieaudio(serieid,languageid) values(2,2),(2,3),(2,4);
+insert into serieaudio(serieid,languageid) values(3,1),(3,5);
+insert into serieaudio(serieid,languageid) values(4,6);
+insert into serieaudio(serieid,languageid) values(5,6),(5,5),(5,4),(5,3);
+insert into serieaudio(serieid,languageid) values(6,2),(6,1);
 
-insert into seriesubtitle(serieid,languageavailablesubtitle) values(1,3),(1,4);
-insert into seriesubtitle(serieid,languageavailablesubtitle) values(2,5),(2,6);
-insert into seriesubtitle(serieid,languageavailablesubtitle) values(3,2),(3,4),(3,3);
-insert into seriesubtitle(serieid,languageavailablesubtitle) values(4,3),(4,2);
-insert into seriesubtitle(serieid,languageavailablesubtitle) values(5,1),(5,2);
-insert into seriesubtitle(serieid,languageavailablesubtitle) values(6,3),(6,4),(6,5),(6,6);
+insert into seriesubtitle(serieid,languageid) values(1,3),(1,4);
+insert into seriesubtitle(serieid,languageid) values(2,5),(2,6);
+insert into seriesubtitle(serieid,languageid) values(3,2),(3,4),(3,3);
+insert into seriesubtitle(serieid,languageid) values(4,3),(4,2);
+insert into seriesubtitle(serieid,languageid) values(5,1),(5,2);
+insert into seriesubtitle(serieid,languageid) values(6,3),(6,4),(6,5),(6,6);

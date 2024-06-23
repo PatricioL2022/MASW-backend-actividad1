@@ -10,6 +10,7 @@
     echo '<link href="../partial/css/vendors/simplebar.css" media="screen" rel="stylesheet" type="text/css" />';
     echo '<link href="../partial/css/style.css" media="screen" rel="stylesheet" type="text/css" />';
     echo '<link href="../partial/css/examples.css" media="screen" rel="stylesheet" type="text/css" />';
+    echo '<link href="../partial/css/select2.min.css" rel="stylesheet" type="text/css" />';
     ?>
 </head>
 <body>

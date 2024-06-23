@@ -74,6 +74,9 @@ include('../partial/sidebar.php');
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Plataforma</th>
                                             <th scope="col">Director</th>
+                                            <th scope="col">Actores</th>
+                                            <th scope="col">Audio</th>
+                                            <th scope="col">Subtitulo</th>
                                             <th scope="col">Acciones</th>
                                         </tr>
                                         </thead>
@@ -85,8 +88,29 @@ include('../partial/sidebar.php');
                                             <tr>
                                                 <th><?php echo $serieItem->getId(); ?></th>
                                                 <td><?php echo $serieItem->getTitle(); ?></td>
-                                                <td><?php echo $serieItem->getPlatformid(); ?></td>
-                                                <td><?php echo $serieItem->getDirectorid(); ?></td>
+                                                <td><?php echo $serieItem->getPlatformname(); ?></td>
+                                                <td><?php echo $serieItem->getDirectorname(); ?></td>
+                                                <td><?php
+                                                        foreach ($serieItem->getActors() as $actorItem)
+                                                        {
+                                                            echo '<li>'.$actorItem->getActorname().'</li>';
+                                                        }
+                                                    ?>
+                                                </td>
+                                                <td><?php
+                                                    foreach ($serieItem->getLanguageAudioAvailable() as $audioItem)
+                                                    {
+                                                        echo '<li>'.$audioItem->getLanguageName().'</li>';
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td><?php
+                                                    foreach ($serieItem->getLanguageSubtitleAvailable() as $subtitleItem)
+                                                    {
+                                                        echo '<li>'.$subtitleItem->getLanguageName().'</li>';
+                                                    }
+                                                    ?>
+                                                </td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic example">
                                                         <a href="Form.php?platform=<?php echo $serieItem->getId();?>" class="btn btn-success">Editar</a>

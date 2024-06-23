@@ -8,6 +8,8 @@
  */
 echo '<script src="../partial/vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>';
 echo '<script src="../partial/vendors/simplebar/js/simplebar.min.js"></script>';
+echo '<script src="../partial/js/jquery.min.js"></script>';
+echo '<script src="../partial/js/select2.min.js"></script>';
 ?>
 </body>
 </html>
