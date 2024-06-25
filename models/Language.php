@@ -119,15 +119,9 @@ class Language {
     {
         $languageDeleted = false;
         $mysqli = $this->connectionDB->initConnectionDb();
-        if($query = $mysqli->query("DELETE FROM serieaudio WHERE languageavailableaudio = '$this->id'"))
+        if($query = $mysqli->query("DELETE FROM language WHERE id='$this->id'"))
         {
-            if($query = $mysqli->query("DELETE FROM seriesubtitle WHERE languageavailablesubtitle='$this->id'"))
-            {
-                if($query = $mysqli->query("DELETE FROM language WHERE id='$this->id'"))
-                {
-                    $languageDeleted = true;
-                }
-            }
+            $languageDeleted = true;
         }
         $mysqli->close();
         return $languageDeleted;

@@ -82,7 +82,7 @@ include('../partial/sidebar.php');
                                                     <td><?php echo $languageItem->getName(); ?></td>
                                                     <td><?php echo $languageItem->getIsocode(); ?></td>
                                                     <td>
-                                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                                             <a href="Form.php?languageId=<?php echo $languageItem->getId();?>" class="btn btn-success">Editar</a>
                                                             <button class="btn btn-danger" type="button" data-coreui-toggle="modal" data-coreui-target="#exampleModalCenter<?php echo $languageItem->getId();?>">Borrar</button>
                                                         </div>
@@ -96,7 +96,8 @@ include('../partial/sidebar.php');
                                                                             <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <p>¿Estás seguro de eliminar este actor <?php echo $languageItem->getName(); ?> ?</p>
+                                                                            <p>¿Estás seguro de eliminar <strong><?php echo $languageItem->getName(); ?></strong>,
+                                                                                los audios y subtitulos de las series en este idioma tambien se borrarán?</p>
 
                                                                         </div>
                                                                         <div class="modal-footer">

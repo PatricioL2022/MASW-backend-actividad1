@@ -2,8 +2,6 @@
 require_once('../../controllers/DirectorController.php');
 $directorList = listDirector();
 include('../partial/sidebar.php');
-echo '<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">';
-echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">';
 
 ?>
 <div class="wrapper d-flex flex-column min-vh-100 bg-light">
@@ -42,7 +40,7 @@ echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/
 
                                         <div class="row">
                                             <div class="alert alert-success" role="alert">
-                                                Plataforma borrado correctamente.<br><a href="List.php">Recargue la página para ver el resultado</a>
+                                                Director borrado correctamente.<br><a href="List.php">Recargue la página para ver el resultado</a>
                                             </div>
                                         </div>
                                     <?php
@@ -50,7 +48,7 @@ echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/
                                     ?>
                                         <div class="row">
                                             <div class="alert alert-danger" role="alert">
-                                                La plataforma no se ha borrado corectamente.
+                                                El director no se ha borrado corectamente.
                                             </div>
                                         </div>
                                 <?php
@@ -80,7 +78,7 @@ echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/
                                                 <td><?php echo $directorItem->getBirthday(); ?></td>
                                                 <td><?php echo $directorItem->getNationality(); ?></td>
                                                 <td>
-                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                                         <a href="Form.php?director=<?php echo $directorItem->getId(); ?>" class="btn btn-success">
                                                             Editar&nbsp;<i class="bi bi-pencil"></i>
                                                         </a>
@@ -97,7 +95,7 @@ echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/
                                                                         <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <p>¿Estás seguro de eliminar este Director?</p>
+                                                                        <p>¿Estás seguro de eliminar a <strong><?php echo $directorItem->getName().' '.$directorItem->getLastName();?></strong>, las series quedarán sin director?</p>
 
                                                                     </div>
                                                                     <div class="modal-footer">

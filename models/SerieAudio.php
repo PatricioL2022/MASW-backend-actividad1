@@ -123,6 +123,17 @@ class SerieAudio
         $mysqli->close();
         return $serieAudioCreated;
     }
+    public function delete()
+    {
+        $serieAudioDeleted = false;
+        $mysqli = $this->connectionDB->initConnectionDb();
+        if($query = $mysqli->query("delete from serieaudio where serieid='$this->serieId'"))
+        {
+            $serieAudioDeleted = true;
+        }
+        $mysqli->close();
+        return $serieAudioDeleted;
+    }
 
 
 }

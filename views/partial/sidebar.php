@@ -39,17 +39,17 @@
                     <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-cursor"></use>
                 </svg> Director</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="#">
+        <li class="nav-item"><a class="nav-link" href="../actor/List.php">
                 <svg class="nav-icon">
                     <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-notes"></use>
                 </svg> Actor</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="#">
+        <li class="nav-item"><a class="nav-link" href="../idioma/List.php">
                 <svg class="nav-icon">
                     <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-star"></use>
                 </svg> Idioma</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="#">
+        <li class="nav-item"><a class="nav-link" href="../serie/List.php">
                 <svg class="nav-icon">
                     <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
                 </svg> Serie</a>

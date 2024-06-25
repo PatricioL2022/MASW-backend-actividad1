@@ -44,13 +44,21 @@ require_once('../../controllers/LanguageController.php');
                             $directorList = listDirector();
                             $actorList = listActorforms();
                             $languageList = listLanguage();
-
                             $objectId = getSerieLastId();
-                            echo 'ID: '.$objectId->getId();
 
+                            $actorListEdit = null;
+                            $audioListEdit = null;
+                            $languageListEdit = null;
+                            $serie = null;
                             if(isset($_GET['serie'])){
                                 $SerieIdParameter = $_GET['serie'];
                                 $serie = getSerieById($SerieIdParameter);
+                                if(isset($serie))
+                                {
+                                    $actorListEdit = getActorsBySerie($serie->getId());
+                                    $audioListEdit = getAudiosBySerie($serie->getId());
+                                    $languageListEdit = getLanguagesBySerie($serie->getId());
+                                }
                             }
                             $textSuccess = '';
                             $textFail = '';
@@ -64,7 +72,8 @@ require_once('../../controllers/LanguageController.php');
                             }
                             if($sendData)
                             {
-                                if(isset($_POST['title']))
+                                if(isset($_POST['title']) && isset($_POST['directorId']) && isset($_POST['platformId']) && isset($_POST['actorId'])
+                                && isset($_POST['languageAudioId']) && isset($_POST['languageSubtituloId']))
                                 {
                                     $title = $_POST['title'];
                                     $directorId = $_POST['directorId'];
@@ -72,25 +81,24 @@ require_once('../../controllers/LanguageController.php');
                                     $arrayActorsId = $_POST['actorId'];
                                     $arrayLanguageAudioId = $_POST['languageAudioId'];
                                     $arrayLanguageSubtituloId = $_POST['languageSubtituloId'];
-                                    echo $title." - ".$directorId." - ".$platformId;
-                                    foreach ($arrayLanguageAudioId as $actor){
-                                        echo 'actor: '.$actor.'<br>';
-                                    }
-                                    /**if(isset($platform))
+                                    if(isset($serie))
                                     {
-                                        $platformCreated = updatePlatform($platform->getId(),$_POST['platformName']);
-                                        if($platformCreated)
-                                            $textSuccess = 'Plataforma actualizada correctamente.';
-                                        else $textFail = 'La plataforma no se ha actualizado correctamente.';
+                                        $serieCreated = updateSerie($serie->getId(),$title,$platformId,$directorId,$arrayActorsId,$arrayLanguageAudioId, $arrayLanguageSubtituloId);
+                                        if($serieCreated)
+                                            $textSuccess = 'Serie actualizada correctamente.';
+                                        else $textFail = 'La serie no se ha actualizado correctamente.';
                                     }
                                     else
-                                    {*/
+                                    {
                                         $serieCreated = storeSerie($title,$platformId,$directorId,$arrayActorsId,$arrayLanguageAudioId, $arrayLanguageSubtituloId);
                                         if($serieCreated)
                                             $textSuccess = 'Serie creada correctamente.';
                                         else $textFail = 'La serie no se ha creado correctamente.';
-                                    //}
+                                    }
 
+                                }
+                                else{
+                                    $textFail = 'Por favor ingrese todos los campos requeridos.';
                                 }
                             }
                             if(!$sendData) {
@@ -100,63 +108,127 @@ require_once('../../controllers/LanguageController.php');
 
                                     <div class="col-md-12">
                                         <label class="form-label" for="title">Título</label>
-                                        <input class="form-control" id="title" name="title" value="<?php if(isset($serie)) echo $serie->getTitle() ?>" type="text" required="" placeholder="Introduce el título">
+                                        <input class="form-control" id="title" name="title" value="<?php if(isset($serie)) echo $serie->getTitle() ?>" type="text" required=""
+                                               placeholder="Introduce el título" maxlength="250">
                                         <div class="invalid-feedback">Ingrese un título.</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" for="platformId">Plataforma</label>
-                                        <select id="platformId" name="platformId" class="js-example-basic-single form-control">
+                                        <input type="hidden" id="platformArray" value="<?php
+                                        if(isset($serie))
+                                        {
+                                            echo $serie->getPlatformid();
+                                        }
+                                        ?>"/>
+                                        <select id="platformId" name="platformId" class="js-example-basic-single form-control" required="">
                                             <?php
                                                 foreach($platformList as $platform){
-                                                    echo  "<option value='".$platform->getId()."'>".$platform->getName()."</option>";
+                                                    /**if(isset($serie))
+                                                    {
+                                                        if($serie->getPlatformid() == $platform->getId())
+                                                        {
+                                                            echo  "<option selected='selected' value='".$platform->getId()."'>".$platform->getName()."</option>";
+                                                        }
+                                                        else echo  "<option value='".$platform->getId()."'>".$platform->getName()."</option>";
+                                                    }
+                                                    else*/
+                                                        echo  "<option value='".$platform->getId()."'>".$platform->getName()."</option>";
                                                 }
                                             ?>
                                         </select>
-                                        <div class="invalid-feedback">Ingrese un nombre.</div>
+                                        <div class="invalid-feedback">Escoja una plataforma.</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" for="directorId">Director</label>
-                                        <select id="directorId" name="directorId" class="js-example-basic-single form-control">
+                                        <input type="hidden" id="directorArray" value="<?php
+                                        if(isset($serie))
+                                        {
+                                            echo $serie->getDirectorid();
+                                        }
+                                        ?>"/>
+                                        <select id="directorId" name="directorId" class="js-example-basic-single form-control" required="">
                                             <?php
                                             foreach($directorList as $director){
-                                                echo  "<option value='".$director->getId()."'>".$director->getName().' '.$director->getLastName()."</option>";
+                                                /**if(isset($serie))
+                                                {
+                                                    if($serie->getDirectorid()==$director->getId())
+                                                    {
+                                                        echo  "<option selected='selected' value='".$director->getId()."'>".$director->getName().' '.$director->getLastName()."</option>";
+                                                    }
+                                                    else echo  "<option value='".$director->getId()."'>".$director->getName().' '.$director->getLastName()."</option>";
+                                                }
+                                                else*/ echo  "<option value='".$director->getId()."'>".$director->getName().' '.$director->getLastName()."</option>";
                                             }
                                             ?>
                                         </select>
-                                        <div class="invalid-feedback">Ingrese un nombre.</div>
+                                        <div class="invalid-feedback">Escoja un director.</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" for="actorId">Actor</label>
-                                        <select id="actorId" name="actorId[]" multiple="multiple" class="js-example-basic-single form-control">
-                                            <?php
-                                            foreach($actorList as $actor){
-                                                echo  "<option value='".$actor->getId()."'>".$actor->getName().' '.$actor->getLastname()."</option>";
+                                        <input type="hidden" id="actorArray" value="<?php
+                                        if(isset($actorListEdit))
+                                        {
+                                            $actorArrayId = [];
+                                            foreach($actorListEdit as $serieActorItem)
+                                            {
+                                                array_push($actorArrayId,$serieActorItem->getActorid());
                                             }
+                                            echo join(",",$actorArrayId);
+                                        }
+                                        ?>"/>
+                                        <select id="actorId" name="actorId[]" multiple="multiple" class="js-example-basic-single form-control" required="">
+                                            <?php
+                                                foreach($actorList as $actor)
+                                                {
+                                                    echo  "<option value='".$actor->getId()."'>".$actor->getName().' '.$actor->getLastname()."</option>";
+                                                }
                                             ?>
                                         </select>
-                                        <div class="invalid-feedback">Ingrese un nombre.</div>
+                                        <div class="invalid-feedback">Escoja uno o varios actores.</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" for="languageAudioId">Audio</label>
-                                        <select id="languageAudioId" name="languageAudioId[]" multiple="multiple" class="js-example-basic-single form-control">
+                                        <input type="hidden" id="audioArray" value="<?php
+                                        if(isset($audioListEdit))
+                                        {
+                                            $audioArrayId = [];
+                                            foreach($audioListEdit as $audioItem)
+                                            {
+                                                array_push($audioArrayId,$audioItem->getLanguageId());
+                                            }
+                                            echo join(",",$audioArrayId);
+                                        }
+                                        ?>"/>
+                                        <select id="languageAudioId" name="languageAudioId[]" multiple="multiple" class="js-example-basic-single form-control" required="">
                                             <?php
                                             foreach($languageList as $language){
                                                 echo  "<option value='".$language->getId()."'>".$language->getName()."</option>";
                                             }
                                             ?>
                                         </select>
-                                        <div class="invalid-feedback">Ingrese un nombre.</div>
+                                        <div class="invalid-feedback">Escoja uno a varios audios.</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" for="languageSubtituloId">Subtítulo</label>
-                                        <select id="languageSubtituloId" name="languageSubtituloId[]" multiple="multiple" class="js-example-basic-single form-control">
+                                        <input type="hidden" id="subtitleArray" value="<?php
+                                        if(isset($languageListEdit))
+                                        {
+                                            $subtitleArrayId = [];
+                                            foreach($languageListEdit as $languageItem)
+                                            {
+                                                array_push($subtitleArrayId,$languageItem->getLanguageId());
+                                            }
+                                            echo join(",",$subtitleArrayId);
+                                        }
+                                        ?>"/>
+                                        <select id="languageSubtituloId" name="languageSubtituloId[]" multiple="multiple" class="js-example-basic-single form-control" required="">
                                             <?php
                                             foreach($languageList as $language){
                                                 echo  "<option value='".$language->getId()."'>".$language->getName()."</option>";
                                             }
                                             ?>
                                         </select>
-                                        <div class="invalid-feedback">Ingrese un nombre.</div>
+                                        <div class="invalid-feedback">Escoja uno o varios idiomas.</div>
                                     </div>
                                     <div class="col-12">
                                         <button class="btn btn-primary" name="createBtn" id="createBtn" type="submit">Guardar</button>
@@ -168,7 +240,7 @@ require_once('../../controllers/LanguageController.php');
                                     ?>
                                     <div class="row">
                                         <div class="alert alert-success" role="alert">
-                                            <?php echo $textSuccess ?><br><a href="List.php">Volver al listado de plataformas</a>
+                                            <?php echo $textSuccess ?><br><a href="List.php">Volver al listado de series</a>
                                         </div>
                                     </div>
                                     <?php
@@ -203,7 +275,10 @@ include('../partial/footer.php');
         // Loop over them and prevent submission
         Array.prototype.slice.call(forms).forEach(function(form) {
             form.addEventListener('submit', function(event) {
-                if (!form.checkValidity()) {
+                var title = $('#title').val().trim();
+                console.log(title.length);
+                if (!form.checkValidity() && title.length<=0) {
+
                     event.preventDefault()
                     event.stopPropagation()
                 }
@@ -212,6 +287,30 @@ include('../partial/footer.php');
         })
     })()
     $(document).ready(function() {
+
+        try {
+            var actors = $('#actorArray').val();
+            const arrayActor = actors.split(",");
+            $('#actorId').val(arrayActor);
+
+            var audios = $('#audioArray').val();
+            const arrayAudio = audios.split(",");
+            $('#languageAudioId').val(arrayAudio);
+
+            var subtitles = $('#subtitleArray').val();
+            const arraySubtitle = subtitles.split(",");
+            $('#languageSubtituloId').val(arraySubtitle);
+
+            var platform = $('#platformArray').val();
+            $('#platformId').val(platform);
+
+            var director = $('#directorArray').val();
+            $('#directorId').val(director);
+
+
+        }catch (e) {
+
+        }
         $('#platformId').select2({
             placeholder: "Seleccione una plataforma",
             allowClear: true
@@ -224,13 +323,16 @@ include('../partial/footer.php');
             placeholder: "Seleccione un actor",
             allowClear: true
         });
+
         $('#languageAudioId').select2({
             placeholder: "Seleccione un idioma",
             allowClear: true
         });
+
         $('#languageSubtituloId').select2({
             placeholder: "Seleccione un idioma",
             allowClear: true
         });
+        //$('#platformId').val(null).trigger('change');
     });
 </script>

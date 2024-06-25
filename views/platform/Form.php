@@ -77,7 +77,7 @@ require_once('../../controllers/PlatformController.php');
                             <form action="" method="post" class="row g-3 needs-validation" novalidate="">
                                 <div class="col-md-12">
                                     <label class="form-label" for="platformName">Nombre</label>
-                                    <input class="form-control" id="platformName" name="platformName" value="<?php if(isset($platform)) echo $platform->getName() ?>" type="text" required="" placeholder="Introduce el nombre de la plataforma">
+                                    <input class="form-control" id="platformName" name="platformName" value="<?php if(isset($platform)) echo $platform->getName() ?>" type="text" required="" maxlength="100" placeholder="Introduce el nombre de la plataforma">
                                     <div class="invalid-feedback">Ingrese un nombre.</div>
                                 </div>
                                 <div class="col-12">

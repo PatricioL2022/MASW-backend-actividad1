@@ -28,7 +28,7 @@ create table serie(
     title varchar(250) not null,
     platformid int,
     directorid int,
-    foreign key(platformid) references platform(id) on update cascade on delete restrict,
+    foreign key(platformid) references platform(id) on update cascade on delete set null,
     foreign key(directorid) references director(id) on update cascade on delete set null
 );
 create table serieactor(
@@ -36,21 +36,21 @@ create table serieactor(
     serieid int,
     actorid int,
     foreign key(serieid) references serie(id) on update cascade on delete cascade,
-    foreign key(actorid) references actor(id) on update cascade on delete restrict
+    foreign key(actorid) references actor(id) on update cascade on delete cascade
 );
 create table serieaudio(
     id int auto_increment primary key,
     serieid int,
     languageid int,
     foreign key(serieid) references serie(id) on update cascade on delete cascade,
-    foreign key(languageid) references language(id) on update cascade on delete restrict
+    foreign key(languageid) references language(id) on update cascade on delete cascade
 );
 create table seriesubtitle(
     id int auto_increment primary key,
     serieid int,
     languageid int,
     foreign key(serieid) references serie(id) on update cascade on delete cascade,
-    foreign key(languageid) references language(id) on update cascade on delete restrict
+    foreign key(languageid) references language(id) on update cascade on delete cascade
 );
 
 insert into platform(name) values

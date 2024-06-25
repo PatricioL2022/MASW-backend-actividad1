@@ -85,7 +85,7 @@ include('../partial/sidebar.php');
                                                     <th><?php echo $platformItem->getId(); ?></th>
                                                     <td><?php echo $platformItem->getName(); ?></td>
                                                     <td>
-                                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                                             <a href="Form.php?platform=<?php echo $platformItem->getId();?>" class="btn btn-success">Editar</a>
                                                             <button class="btn btn-danger" type="button" data-coreui-toggle="modal" data-coreui-target="#exampleModalCenter<?php echo $platformItem->getId();?>">Borrar</button>
                                                         </div>
@@ -98,7 +98,7 @@ include('../partial/sidebar.php');
                                                                             <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <p>¿Estás seguro de eliminar esta plataforma?</p>
+                                                                            <p>¿Estás seguro de eliminar <strong><?php echo $platformItem->getName();?></strong>, las series pertenecientes quedarán sin plataforma?</p>
 
                                                                         </div>
                                                                         <div class="modal-footer">

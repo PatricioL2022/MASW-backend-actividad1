@@ -118,6 +118,17 @@ class SerieActor
         $mysqli->close();
         return $serieActorCreated;
     }
+    public function delete()
+    {
+        $serieActorDeleted = false;
+        $mysqli = $this->connectionDB->initConnectionDb();
+        if($query = $mysqli->query("delete from serieactor where serieid='$this->serieid'"))
+        {
+            $serieActorDeleted = true;
+        }
+        $mysqli->close();
+        return $serieActorDeleted;
+    }
 
 
 }

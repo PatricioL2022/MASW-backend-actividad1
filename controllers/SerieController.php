@@ -59,7 +59,55 @@ function storeSerie($serieTitle,$platformId,$directorId,$arrayActorsId,$arrayLan
         $newSerieSubtitle = new SerieSubtitle(null,intval($itemLanguageId),intval($lastSerieId));
         $newSerieSubtitle->store();
     }
-
-
     return $serieCreated;
+}
+function updateSerie($serieId,$serieTitle,$platformId,$directorId,$arrayActorsId,$arrayLanguageAudioId,$arrayLanguageSubtitleId){
+    $editSerie = new Serie($serieId,$serieTitle,intval($platformId),null,intval($directorId),null);
+    $serieUpdated = $editSerie->update();
+
+    $serieActor = new SerieActor(null,$serieId);
+    $serieActor->delete();
+    foreach ($arrayActorsId as $itemActorId)
+    {
+        $newSerieActor = new SerieActor(null,$serieId,intval($itemActorId));
+        $newSerieActor->store();
+    }
+
+    $serieAudio = new SerieAudio(null,null,$serieId);
+    $serieAudio->delete();
+    foreach ($arrayLanguageAudioId as $itemLanguageId)
+    {
+        $newSerieAudio = new SerieAudio(null,intval($itemLanguageId),$serieId);
+        $newSerieAudio->store();
+    }
+
+    $serieSubtitle = new SerieSubtitle(null,null,$serieId);
+    $serieSubtitle->delete();
+    foreach ($arrayLanguageSubtitleId as $itemLanguageId)
+    {
+        $newSerieSubtitle = new SerieSubtitle(null,intval($itemLanguageId),$serieId);
+        $newSerieSubtitle->store();
+    }
+    return $serieUpdated;
+}
+function deleteSerie($serieId){
+    $serie = new Serie($serieId);
+    $serieDeleted = $serie->delete();
+
+    return $serieDeleted;
+}
+function getActorsBySerie($serieId)
+{
+    $serieActor = new SerieActor();
+    return $serieActor->getActorsBySerie($serieId);
+}
+function getAudiosBySerie($serieId)
+{
+    $serieAudio = new SerieAudio();
+    return $serieAudio->getAudiosAvailableBySerie($serieId);
+}
+function getLanguagesBySerie($serieId)
+{
+    $serieSubtitle = new SerieSubtitle();
+    return $serieSubtitle->getSubtitlesAvailableBySerie($serieId);
 }

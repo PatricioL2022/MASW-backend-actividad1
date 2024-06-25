@@ -60,7 +60,7 @@ include('./partial/sidebar.php');
                     </div>
                 </a>
                 <!-- /.col-->
-                <a href="#" class="col-sm-6 col-lg-3">
+                <a href="actor/List.php" class="col-sm-6 col-lg-3">
                     <div class="card mb-4 text-white bg-warning">
                         <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                             <div>
@@ -72,7 +72,7 @@ include('./partial/sidebar.php');
                     </div>
                 </a>
                 <!-- /.col-->
-                <a href="#" class="col-sm-6 col-lg-3">
+                <a href="idioma/List.php" class="col-sm-6 col-lg-3">
                     <div class="card mb-4 text-white bg-danger">
                         <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                             <div>
@@ -85,7 +85,7 @@ include('./partial/sidebar.php');
                 </a>
                 <!-- /.col-->
                 <!-- /.col-->
-                <a href="#" class="col-sm-6 col-lg-3">
+                <a href="serie/List.php" class="col-sm-6 col-lg-3">
                     <div class="card mb-4 text-white bg-success">
                         <div class="card-body pb-0 d-flex justify-content-between align-items-start">
                             <div>

@@ -84,7 +84,7 @@ include('../partial/sidebar.php');
                                                     <td><?php echo $actformItem->getLastname(); ?></td>
                                                     <td><?php echo $actformItem->getBirthday(); ?></td>
                                                     <td>
-                                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                                             <a href="Form.php?actorId=<?php echo $actformItem->getId();?>" class="btn btn-success">Editar</a>
                                                             <button class="btn btn-danger" type="button" data-coreui-toggle="modal" data-coreui-target="#exampleModalCenter<?php echo $actformItem->getId();?>">Borrar</button>
                                                         </div>
@@ -97,7 +97,8 @@ include('../partial/sidebar.php');
                                                                             <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <p>¿Estás seguro de eliminar este actor <?php echo $actformItem->getName(); ?> ?</p>
+                                                                            <p>¿Estás seguro de eliminar a <strong><?php echo $actformItem->getName().' '.$actformItem->getLastName(); ?> </strong>,
+                                                                                sus participaciones en series tambien se borrarán?</p>
 
                                                                         </div>
                                                                         <div class="modal-footer">

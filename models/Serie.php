@@ -196,7 +196,7 @@ private $languageSubtitleAvailable;
     public function getAll()
     {
         $mysqli = $this->connectionDB->initConnectionDb();
-        $query = $mysqli->query("select s.id,s.title,p.name as platform,concat(d.name,' ',d.lastname) as director from serie s inner join platform p on s.platformid = p.id inner join director d on s.directorid = d.id order by s.id desc");
+        $query = $mysqli->query("select s.id,s.title,p.name as platform,concat(d.name,' ',d.lastname) as director from serie s left join platform p on s.platformid = p.id left join director d on s.directorid = d.id order by s.id desc");
         $listData = [];
         foreach ($query as $item)
         {
@@ -209,16 +209,7 @@ private $languageSubtitleAvailable;
     public function getById($serieId)
     {
         $mysqli = $this->connectionDB->initConnectionDb();
-        $query = $mysqli->query("select s.id,s.title,s.platformid,pl.name platformname,s.directorid,concat(dr.name,' ',dr.lastname) directorname from serie s inner join director dr on s.directorid = dr.id inner join platform pl on s.platformid = pl.id where s.id = $serieId order by s.id asc");
-        /**$listData = [];
-        foreach ($query as $item)
-        {
-            $itemObject = new Serie($item['id'],$item['title'],$item['platformid'],$item['platformname'],$item['directorid'],$item['directorname']);
-            array_push($listData,$itemObject);
-        }
-        $mysqli->close();
-        return $listData;*/
-
+        $query = $mysqli->query("select s.id,s.title,s.platformid,pl.name platformname,s.directorid,concat(dr.name,' ',dr.lastname) directorname from serie s left join director dr on s.directorid = dr.id left join platform pl on s.platformid = pl.id where s.id = $serieId order by s.id asc");
         $itemObject = mysqli_fetch_object($query,Serie::class);
         $mysqli->close();
         return $itemObject;
@@ -227,15 +218,6 @@ private $languageSubtitleAvailable;
     {
         $mysqli = $this->connectionDB->initConnectionDb();
         $query = $mysqli->query("select nullif(max(id),1) as id from serie");
-        /**$listData = [];
-        foreach ($query as $item)
-        {
-        $itemObject = new Serie($item['id'],$item['title'],$item['platformid'],$item['platformname'],$item['directorid'],$item['directorname']);
-        array_push($listData,$itemObject);
-        }
-        $mysqli->close();
-        return $listData;*/
-
         $itemObject = mysqli_fetch_object($query,Serie::class);
         $mysqli->close();
         return $itemObject;
@@ -250,6 +232,29 @@ private $languageSubtitleAvailable;
         }
         $mysqli->close();
         return $platformCreated;
+    }
+
+    public function update()
+    {
+        $serieUpdated = false;
+        $mysqli = $this->connectionDB->initConnectionDb();
+        if($mysqli->query("update serie set title = '$this->title',platformid='$this->platformid',directorid='$this->directorid' where id='$this->id'"))
+        {
+            $serieUpdated = true;
+        }
+        $mysqli->close();
+        return $serieUpdated;
+    }
+    public function delete()
+    {
+        $serieDeleted = false;
+        $mysqli = $this->connectionDB->initConnectionDb();
+        if($query = $mysqli->query("delete from serie where id='$this->id'"))
+        {
+            $serieDeleted = true;
+        }
+        $mysqli->close();
+        return $serieDeleted;
     }
 
 }

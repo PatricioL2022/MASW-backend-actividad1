@@ -123,4 +123,15 @@ class SerieSubtitle
         $mysqli->close();
         return $serieSubtitleCreated;
     }
+    public function delete()
+    {
+        $serieSubtitleDeleted = false;
+        $mysqli = $this->connectionDB->initConnectionDb();
+        if($query = $mysqli->query("delete from seriesubtitle where serieid='$this->serieId'"))
+        {
+            $serieSubtitleDeleted = true;
+        }
+        $mysqli->close();
+        return $serieSubtitleDeleted;
+    }
 }

@@ -41,30 +41,30 @@ include('../partial/sidebar.php');
                             <div class="card-body">
                                 <div class="example">
                                     <?php
-                                    /*if(isset($_POST['platformId']))
+                                    if(isset($_POST['serieId']))
                                     {
-                                        $platformId = $_POST['platformId'];
-                                        $platformDeleted = deletePlatform($platformId);
-                                        if($platformDeleted)
-                                        {*/
+                                        $serieId = $_POST['serieId'];
+                                        $serieDeleted = deleteSerie($serieId);
+                                        if($serieDeleted)
+                                        {
                                             ?>
 
                                             <div class="row">
                                                 <div class="alert alert-success" role="alert">
-                                                    Plataforma borrado correctamente.<br><a href="List.php">Recargue la página para ver el resultado</a>
+                                                    Serie borrado correctamente.<br><a href="List.php">Recargue la página para ver el resultado</a>
                                                 </div>
                                             </div>
                                             <?php
-                                        /**} else {
+                                        } else {
                                             ?>
                                             <div class="row">
                                                 <div class="alert alert-danger" role="alert">
-                                                    La plataforma no se ha borrado corectamente.
+                                                    La Serie no se ha borrado corectamente.
                                                 </div>
                                             </div>
                                             <?php
                                         }
-                                    }*/
+                                    }
 
                                     ?>
                                     <table class="table table-striped">
@@ -119,8 +119,8 @@ include('../partial/sidebar.php');
                                                     ?>
                                                 </td>
                                                 <td>
-                                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                                        <a href="Form.php?platform=<?php echo $serieItem->getId();?>" class="btn btn-success">Editar</a>
+                                                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                                        <a href="Form.php?serie=<?php echo $serieItem->getId();?>" class="btn btn-success">Editar</a>
                                                         <button class="btn btn-danger" type="button" data-coreui-toggle="modal" data-coreui-target="#exampleModalCenter<?php echo $serieItem->getId();?>">Borrar</button>
                                                     </div>
                                                     <div class="row">
@@ -132,13 +132,13 @@ include('../partial/sidebar.php');
                                                                         <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <p>¿Estás seguro de eliminar esta plataforma?</p>
+                                                                        <p>¿Estás seguro de eliminar esta serie?</p>
 
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button class="btn btn-secondary" type="button" data-coreui-dismiss="modal">Cancelar</button>
                                                                         <form name="delete_platform" action="" method="post">
-                                                                            <input name="platformId" type="hidden" value="<?php echo $serieItem->getId(); ?>" />
+                                                                            <input name="serieId" type="hidden" value="<?php echo $serieItem->getId(); ?>" />
                                                                             <button type="submit" class="btn btn-danger">Si, Borrar</button>
                                                                         </form>
                                                                     </div>
