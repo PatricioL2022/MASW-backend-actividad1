@@ -14,9 +14,9 @@ include('../partial/sidebar.php');
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb my-0 ms-2">
                     <li class="breadcrumb-item">
-                        <!-- if breadcrumb is single--><span>IDIOMAS</span>
+                        <!-- if breadcrumb is single--><span>Idioma</span>
                     </li>
-                    <li class="breadcrumb-item active"><span>LISTADO</span></li>
+                    <li class="breadcrumb-item active"><span>Listado</span></li>
                 </ol>
             </nav>
         </div>
@@ -26,11 +26,11 @@ include('../partial/sidebar.php');
             <div class="row">
                 <div class="col-sm-12 col-lg-12">
                     <div class="card mb-4">
-                        <div class="card-header"><strong>IDIOMAS</strong></div>
+                        <div class="card-header"><strong>Idioma</strong></div>
                         <div class="row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6 text-end pt-2 pe-4">
-                                <a href="Form.php" class="btn btn-primary text-end">Nuevo+</a>
+                                <a href="Form.php" class="btn btn-primary text-end">Nuevo&nbsp;<i class="bi bi-plus-circle"></i></a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -63,61 +63,61 @@ include('../partial/sidebar.php');
                                 }
 
                                 ?>
-                                        <table class="table table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">Id</th>
-                                                <th scope="col">Nombre</th>
-                                                <th scope="col">Código ISO</th>
-                                                <th scope="col">Acciones</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php
-                                            foreach ($languageList as $languageItem)
-                                            {
-                                             ?>
-                                                <tr>
-                                                    <th><?php echo $languageItem->getId(); ?></th>
-                                                    <td><?php echo $languageItem->getName(); ?></td>
-                                                    <td><?php echo $languageItem->getIsocode(); ?></td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                                            <a href="Form.php?languageId=<?php echo $languageItem->getId();?>" class="btn btn-success">Editar</a>
-                                                            <button class="btn btn-danger" type="button" data-coreui-toggle="modal" data-coreui-target="#exampleModalCenter<?php echo $languageItem->getId();?>">Borrar</button>
-                                                        </div>
-                                                        <div class="row">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Código ISO</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    foreach ($languageList as $languageItem)
+                                    {
+                                        ?>
+                                        <tr>
+                                            <th><?php echo $languageItem->getId(); ?></th>
+                                            <td><?php echo $languageItem->getName(); ?></td>
+                                            <td><?php echo $languageItem->getIsocode(); ?></td>
+                                            <td>
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <a href="Form.php?languageId=<?php echo $languageItem->getId();?>" class="btn btn-success">Editar <i class="bi bi-pencil"></i> </a>
+                                                    <button class="btn btn-danger ml-1" type="button" data-coreui-toggle="modal" data-coreui-target="#exampleModalCenter<?php echo $languageItem->getId();?>">Borrar <i class="bi bi-trash"></i> </button>
+                                                </div>
+                                                <div class="row">
 
-                                                            <div class="modal fade" id="exampleModalCenter<?php echo $languageItem->getId();?>" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="exampleModalCenterTitle">Confirmación</h5>
-                                                                            <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <p>¿Estás seguro de eliminar <strong><?php echo $languageItem->getName(); ?></strong>,
+                                                    <div class="modal fade" id="exampleModalCenter<?php echo $languageItem->getId();?>" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Confirmación</h5>
+                                                                    <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                <p>¿Estás seguro de eliminar <strong><?php echo $languageItem->getName(); ?></strong>,
                                                                                 los audios y subtitulos de las series en este idioma tambien se borrarán?</p>
 
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button class="btn btn-secondary" type="button" data-coreui-dismiss="modal">Cancelar</button>
-                                                                            <form name="delete_act" action="" method="post">
-                                                                                <input name="languageId" type="hidden" value="<?php echo $languageItem->getId(); ?>" />
-                                                                                <button type="submit" class="btn btn-danger">Si, Borrar</button>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button class="btn btn-secondary" type="button" data-coreui-dismiss="modal">Cancelar</button>
+                                                                    <form name="delete_act" action="" method="post">
+                                                                        <input name="languageId" type="hidden" value="<?php echo $languageItem->getId(); ?>" />
+                                                                        <button type="submit" class="btn btn-danger">Si, Borrar</button>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                                <?php
-                                             }
-                                            ?>
-                                            </tbody>
-                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -129,4 +129,3 @@ include('../partial/sidebar.php');
 <?php
 include('../partial/footer.php');
 ?>
-
