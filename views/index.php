@@ -51,9 +51,7 @@ include('./partial/sidebar.php');
                             <div>
                                 <div style="font-size: 30px">Directores</div>
                             </div>
-                            <div class="icon">
-                            <i class="bi bi-people-fill"></i>
-                            </div>
+
                         </div>
                         <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
                         </div>

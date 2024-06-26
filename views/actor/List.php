@@ -30,7 +30,7 @@ include('../partial/sidebar.php');
                         <div class="row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6 text-end pt-2 pe-4">
-                                <a href="Form.php" class="btn btn-primary text-end">Nuevo <i class="m-0 bi bi-plus-circle"></i></a>
+                                <a href="Form.php" class="btn btn-primary text-end">Nuevo+</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -82,9 +82,9 @@ include('../partial/sidebar.php');
                                             <th><?php echo $actformItem->getId(); ?></th>
                                             <td><?php echo $actformItem->getName(); ?></td>
                                             <td><?php echo $actformItem->getLastname(); ?></td>
-                                            <td><?php echo $actformItem->getBirthday(); ?></td>
+                                            <td><?php $birthday = date("d/m/Y", strtotime($actformItem->getBirthday())); echo $birthday; ?></td>
                                             <td>
-                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                                     <a href="Form.php?actorId=<?php echo $actformItem->getId();?>" class="btn btn-success">Editar <i class="bi bi-pencil"></i></a>
                                                     <button class="btn btn-danger ml-1" type="button" data-coreui-toggle="modal" data-coreui-target="#exampleModalCenter<?php echo $actformItem->getId();?>">Borrar <i class="bi bi-trash"></i></button>
                                                 </div>

@@ -38,8 +38,6 @@ require_once('../../controllers/LanguageController.php');
                             $textFail = '';
                             $textFailName = '';
                             $textFailIsoCode = '';
-
-
                             $sendData = false;
                             $invalido = true;
                             $languageCreated = false;
@@ -50,24 +48,24 @@ require_once('../../controllers/LanguageController.php');
                                     $language->setIsocode($_POST['idiomaIsocode']);
                                 }
                                 // Validar nombre
-                                if (!preg_match("/^[a-zA-Z'-]+$/",$_POST['idiomaName'])) {
-                                    $textFailName = "El nombre contiene caracteres inválidos.";
+                                if (!preg_match("/^[a-zA-Z' -]+$/",trim($_POST['idiomaName']))) {
+                                    $textFailName = "El nombre de idioma contiene caracteres inválidos.";
                                     $invalido = false;
-                                } else if (strlen($_POST['idiomaName']) > 18) {
-                                    $textFailName = "El idioma solo puede contener hasta 18 caracteres.";
+                                } else if (strlen(trim($_POST['idiomaName'])) > 50) {
+                                    $textFailName = "El idioma solo puede contener hasta 50 caracteres.";
                                     $invalido = false;
-                                } else if (strlen($_POST['idiomaName']) < 2) {
+                                } else if (strlen(trim($_POST['idiomaName'])) < 2) {
                                     $textFailName = "El idioma debe tener al menos 2 caracteres.";
                                     $invalido = false;
                                 }
                                 // Validar codigo ISO
                                 if (!preg_match("/^[a-zA-Z'-]+$/",$_POST['idiomaIsocode'])) {
-                                    $textFailIsoCode = "El nombre contiene caracteres inválidos.";
+                                    $textFailIsoCode = "El código ISO contiene caracteres inválidos.";
                                     $invalido = false;
-                                } else if (strlen($_POST['idiomaIsocode']) > 5) {
-                                    $textFailIsoCode = "El código ISO solo puede contener hasta 5 caracteres.";
+                                } else if (strlen(trim($_POST['idiomaIsocode'])) > 10) {
+                                    $textFailIsoCode = "El código ISO solo puede contener hasta 10 caracteres.";
                                     $invalido = false;
-                                } else if (strlen($_POST['idiomaIsocode']) < 2) {
+                                } else if (strlen(trim($_POST['idiomaIsocode'])) < 2) {
                                     $textFailIsoCode = "El código ISO debe tener al menos 2 caracteres.";
                                     $invalido = false;
                                 }
@@ -115,13 +113,13 @@ require_once('../../controllers/LanguageController.php');
                                 ?>
                                 <form action="" method="post" class="row g-3 needs-validation" novalidate="">
                                     <div class="col-md-6">
-                                        <label class="form-label" for="idiomaName">Nombre</label>
-                                        <input class="form-control" id="idiomaName" name="idiomaName" value="<?php if(isset($language)) echo $language->getName() ?>" type="text" required="true" placeholder="Introduce el nombre del idioma">
+                                        <label class="form-label" for="idiomaName">Nombre <span class="campoRequerido">*</span></label>
+                                        <input class="form-control" id="idiomaName" name="idiomaName" value="<?php if(isset($language)) echo $language->getName() ?>" type="text" required="true" maxlength="50" placeholder="Introduce el nombre del idioma">
                                         <div class="invalid-feedback">Ingrese un nombre del idioma.</div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label" for="idiomaIsocode">Código ISO</label>
-                                        <input class="form-control" id="idiomaIsocode" name="idiomaIsocode" value="<?php if(isset($language)) echo $language->getIsocode() ?>" type="text" required="true" placeholder="Introduce el código ISO del idioma">
+                                        <label class="form-label" for="idiomaIsocode">Código ISO <span class="campoRequerido">*</span></label>
+                                        <input class="form-control" id="idiomaIsocode" name="idiomaIsocode" value="<?php if(isset($language)) echo $language->getIsocode() ?>" type="text" required="true" maxlength="10" placeholder="Introduce el código ISO del idioma">
                                         <div class="invalid-feedback">Ingrese un código ISO.</div>
                                     </div>
 

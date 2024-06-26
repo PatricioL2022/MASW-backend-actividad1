@@ -31,7 +31,7 @@ private $languageSubtitleAvailable;
         if($id!=null)
             $this->id = $id;
         if($title!=null)
-            $this->title = $title;
+            $this->title = trim($title);
         if($platformid!=null)
             $this->platformid = $platformid;
         if($platformname!=null)
@@ -196,7 +196,7 @@ private $languageSubtitleAvailable;
     public function getAll()
     {
         $mysqli = $this->connectionDB->initConnectionDb();
-        $query = $mysqli->query("select s.id,s.title,p.name as platform,concat(d.name,' ',d.lastname) as director from serie s left join platform p on s.platformid = p.id left join director d on s.directorid = d.id order by s.id desc");
+        $query = $mysqli->query("select s.id,s.title,p.name as platform,concat(d.name,' ',d.lastname) as director from serie s left join platform p on s.platformid = p.id left join director d on s.directorid = d.id order by s.id asc");
         $listData = [];
         foreach ($query as $item)
         {

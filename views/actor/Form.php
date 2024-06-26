@@ -1,6 +1,7 @@
 <?php
 include('../partial/sidebar.php');
 require_once('../../controllers/ActorController.php');
+require_once('../../controllers/Utils/Validation.php');
 ?>
 
 <div class="wrapper d-flex flex-column min-vh-100 bg-light">
@@ -44,17 +45,6 @@ require_once('../../controllers/ActorController.php');
                             $textFailBirthday = '';
                             $edad = 1;
 
-                            function edad($edad){
-                                list($anio,$mes,$dia) = explode("-",$edad);
-                                $anio_dif = date("Y") - $anio;
-                                $mes_dif = date("m") - $mes;
-                                $dia_dif = date("d") - $dia;
-                                if ($dia_dif < 0 || $mes_dif < 0)
-                                    $anio_dif--;
-                                return $anio_dif;
-                            }
-
-
                             $sendData = false;
                             $invalido = true;
                             $platformCreated = false;
@@ -66,32 +56,32 @@ require_once('../../controllers/ActorController.php');
                                     $actor->setBirthday($_POST['actorBirthday']);
                                 }
                                 // Validar nombre
-                                if (!preg_match("/^[a-zA-Z'-]+$/",$_POST['actorName'])) {
+                                if (!preg_match("/^[a-zA-ZÁ-ÿ' -]+$/",trim($_POST['actorName']))) {
                                     $textFailName = "El nombre contiene caracteres inválidos.";
                                     $invalido = false;
-                                } else if (strlen($_POST['actorName']) > 18) {
-                                    $textFailName = "El nombre solo puede contener hasta 18 caracteres.";
+                                } else if (strlen( trim($_POST['actorName'])) > 50) {
+                                    $textFailName = "El nombre solo puede contener hasta 50 caracteres.";
                                     $invalido = false;
-                                } else if (strlen($_POST['actorName']) < 3) {
+                                } else if (strlen(trim($_POST['actorName'])) < 3) {
                                     $textFailName = "El nombre debe tener al menos 3 caracteres.";
                                     $invalido = false;
                                 }
 
                                 // Validar apellido
-                                if (!preg_match("/^[a-zA-Z'-]+$/",$_POST['actorLastname'])) {
+                                if (!preg_match("/^[a-zA-ZÁ-ÿ' -]+$/",trim($_POST['actorLastname']))) {
                                     $textFailLastName = "El apellido contiene caracteres inválidos.";
                                     $invalido = false;
-                                } else if (strlen($_POST['actorLastname']) > 18) {
-                                    $textFailLastName = "El apellido solo puede contener hasta 18 caracteres.";
+                                } else if (strlen(trim($_POST['actorLastname'])) > 50) {
+                                    $textFailLastName = "El apellido solo puede contener hasta 50 caracteres.";
                                     $invalido = false;
-                                } else if (strlen($_POST['actorLastname']) < 3) {
+                                } else if (strlen(trim($_POST['actorLastname'])) < 3) {
                                     $textFailLastName = "El apellido debe tener al menos 3 caracteres.";
                                     $invalido = false;
                                 }
 
                                 $edad =edad($_POST['actorBirthday']);
                                 if ($edad > 150) {
-                                    $textFailBirthday = "La fecha ingresada es supeior a la edad máxima. Edad:";
+                                    $textFailBirthday = "La fecha ingresada es superior a la edad máxima. Edad:";
                                     $invalido = false;
                                 } else if ($edad < 10) {
                                     $textFailBirthday = "La fecha ingresada es inferior a la edad permitida. Edad:";
@@ -146,19 +136,19 @@ require_once('../../controllers/ActorController.php');
                                 ?>
                                 <form action="" method="post" class="row g-3 needs-validation" novalidate="">
                                     <div class="col-md-6">
-                                        <label class="form-label" for="actorName">Nombre</label>
-                                        <input class="form-control" id="actorName" name="actorName" value="<?php if(isset($actor)) echo $actor->getName() ?>" type="text" maxlength="18" minlength="3" required="true" placeholder="Introduce el nombre del actor">
-                                        <div class="invalid-feedback"><?php echo $textFailName ?></div>
+                                        <label class="form-label" for="actorName">Nombre <span class="campoRequerido">*</span></label>
+                                        <input class="form-control" id="actorName" name="actorName" value="<?php if(isset($actor)) echo $actor->getName() ?>" type="text" maxlength="50" minlength="3" required="true" placeholder="Introduce el nombre del actor">
+                                        <div class="invalid-feedback">Ingrese un nombre.</div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label" for="actorLastname">Apellido</label>
-                                        <input class="form-control" id="actorLastname" name="actorLastname" value="<?php if(isset($actor)) echo $actor->getLastname() ?>" type="text" maxlength="18" minlength="3" required="true" placeholder="Introduce el apellido del actor">
+                                        <label class="form-label" for="actorLastname">Apellido <span class="campoRequerido">*</span></label>
+                                        <input class="form-control" id="actorLastname" name="actorLastname" value="<?php if(isset($actor)) echo $actor->getLastname() ?>" type="text" maxlength="50" minlength="3" required="true" placeholder="Introduce el apellido del actor">
                                         <div class="invalid-feedback">Ingrese un apellido.</div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label" for="actorBirthday">Fecha Nacimiento</label>
-                                        <input class="form-control" id="actorBirthday" name="actorBirthday" value="<?php if(isset($actor)) echo $actor->getBirthday() ?>" type="date" da  max="<?php echo $today?>"  required="true" placeholder="Introduce la fecha de nacimiento del actor">
+                                        <label class="form-label" for="actorBirthday">Fecha Nacimiento <span class="campoRequerido">*</span></label>
+                                        <input class="form-control" id="actorBirthday" name="actorBirthday" value="<?php if(isset($actor)) echo $actor->getBirthday() ?>" type="date"  max="<?php echo $today?>"  required="true" placeholder="Introduce la fecha de nacimiento del actor">
                                         <div class="invalid-feedback">Ingrese la fecha de nacimiento.</div>
                                     </div>
 

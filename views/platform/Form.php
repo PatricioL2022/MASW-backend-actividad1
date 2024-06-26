@@ -43,13 +43,37 @@ require_once('../../controllers/PlatformController.php');
                             }
                             $textSuccess = '';
                             $textFail = '';
-
-
+                            $textFailName = '';
+                            $invalido = true;
                             $sendData = false;
                             $platformCreated = false;
                             if(isset($_POST['createBtn']))
                             {
-                                $sendData = true;
+                                // Validar nombre
+                                if (!preg_match("/^[a-zA-Z0-9Á-ÿ'+ -]+$/",trim($_POST['platformName']))) {
+                                    $textFailName = "El nombre de plataforma contiene caracteres inválidos.";
+                                    $invalido = false;
+                                } else if (strlen(trim($_POST['platformName'])) > 100) {
+                                    $textFailName = "El nombre de plataforma solo puede contener hasta 100 caracteres.";
+                                    $invalido = false;
+                                } else if (strlen(trim($_POST['platformName'])) < 2) {
+                                    $textFailName = "El nombre de plataforma debe tener al menos 2 caracteres.";
+                                    $invalido = false;
+                                }
+                                if(!$invalido)
+                                {
+                                    ?>
+                                    <div class="row p-2">
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                            <strong>RESPUESTA DEL SISTEMA:</strong><br>
+                                            <?php if (!empty($textFailName)) ?>
+                                                <?php echo $textFailName  ?><br>
+                                        </div>
+                                    </div>
+                                    <?php
+                                    } else{
+                                        $sendData = true;
+                                    }
                             }
                             if($sendData)
                             {
@@ -69,19 +93,19 @@ require_once('../../controllers/PlatformController.php');
                                         $textSuccess = 'Plataforma creada correctamente.';
                                         else $textFail = 'La plataforma no se ha creado correctamente.';
                                     }
-
                                 }
                             }
                             if(!$sendData) {
                             ?>
                             <form action="" method="post" class="row g-3 needs-validation" novalidate="">
                                 <div class="col-md-12">
-                                    <label class="form-label" for="platformName">Nombre</label>
+                                    <label class="form-label" for="platformName">Nombre <span class="campoRequerido">*</span></label>
                                     <input class="form-control" id="platformName" name="platformName" value="<?php if(isset($platform)) echo $platform->getName() ?>" type="text" required="" maxlength="100" placeholder="Introduce el nombre de la plataforma">
                                     <div class="invalid-feedback">Ingrese un nombre.</div>
                                 </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary" name="createBtn" id="createBtn" type="submit">Guardar</button>
+                                <div class="col-12 d-flex justify-content-center">
+                                    <button class="btn btn-primary" style="margin-right: 4px;" name="createBtn" id="createBtn" type="submit">Guardar</button>
+                                    <a href="List.php" class="btn btn-danger" type="button">Cancelar</a>
                                 </div>
                             </form>
                             <?php

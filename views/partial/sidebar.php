@@ -12,6 +12,11 @@
     echo '<link href="../partial/css/examples.css" media="screen" rel="stylesheet" type="text/css" />';
     echo '<link href="../partial/css/select2.min.css" rel="stylesheet" type="text/css" />';
     ?>
+    <style>
+        .campoRequerido {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">

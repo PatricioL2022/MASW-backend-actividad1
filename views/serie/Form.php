@@ -62,14 +62,81 @@ require_once('../../controllers/LanguageController.php');
                             }
                             $textSuccess = '';
                             $textFail = '';
-
-
+                            $textFailTitle='';
+                            $textFailPlatform='';
+                            $textFailDirector='';
+                            $textFailActor='';
+                            $textFailAudio='';
+                            $textFailSubtitulo='';
                             $sendData = false;
+                            $invalido = true;
                             $serieCreated = false;
                             if(isset($_POST['createBtn']))
                             {
+                                // Validar nombre
+                                if (!preg_match("/^[a-zA-Z0-9Á-ÿ' -]+$/",trim($_POST['title']))) {
+                                    $textFailTitle = "El título contiene caracteres inválidos.";
+                                    $invalido = false;
+                                } else if (strlen( trim($_POST['title'])) > 250) {
+                                    $textFailTitle = "El título solo puede contener hasta 250 caracteres.";
+                                    $invalido = false;
+                                } else if (strlen(trim($_POST['title'])) < 3) {
+                                    $textFailTitle = "El título debe tener al menos 3 caracteres.";
+                                    $invalido = false;
+                                }
+
+                                // Validar plataforma
+                               if (!isset($_POST['platformId']))
+                               {
+                                    $textFailPlatform = "Debe seleccionar una plataforma.";
+                                    $invalido = false;
+                               }
+                                // Validar director
+                                if (!isset($_POST['directorId']))
+                                {
+                                    $textFailDirector = "Debe seleccionar un director.";
+                                    $invalido = false;
+                                }
+                                // Validar actor
+                                if (!isset($_POST['actorId']))
+                                {
+                                    $textFailActor = "Debe seleccionar uno o varios actores.";
+                                    $invalido = false;
+                                }
+                                // Validar audio
+                                if (!isset($_POST['languageAudioId']))
+                                {
+                                    $textFailAudio = "Debe seleccionar uno o varios audios.";
+                                    $invalido = false;
+                                }
+                                // Validar subtitulo
+                                if (!isset($_POST['languageSubtituloId']))
+                                {
+                                    $textFailSubtitulo = "Debe seleccionar uno o varios subtitulos.";
+                                    $invalido = false;
+                                }
+
+                            if(!$invalido)
+                            {
+                                ?>
+                                <div class="row p-2">
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <strong>RESPUESTA DEL SISTEMA:</strong><br>
+                                        <?php if (!empty($textFailTitle)) echo $textFailTitle ?><br>
+                                        <?php if (!empty($textFailPlatform)) echo $textFailPlatform ?><br>
+                                        <?php if (!empty($textFailDirector)) echo $textFailDirector ?><br>
+                                        <?php if (!empty($textFailActor)) echo $textFailActor ?><br>
+                                        <?php if (!empty($textFailAudio)) echo $textFailAudio ?><br>
+                                        <?php if (!empty($textFailSubtitulo)) echo $textFailSubtitulo ?><br>
+
+                                    </div>
+                                </div>
+                                <?php
+                            } else{
                                 $sendData = true;
                             }
+                            }
+
                             if($sendData)
                             {
                                 if(isset($_POST['title']) && isset($_POST['directorId']) && isset($_POST['platformId']) && isset($_POST['actorId'])
@@ -107,13 +174,13 @@ require_once('../../controllers/LanguageController.php');
 
 
                                     <div class="col-md-12">
-                                        <label class="form-label" for="title">Título</label>
+                                        <label class="form-label" for="title">Título <span class="campoRequerido">*</span></label>
                                         <input class="form-control" id="title" name="title" value="<?php if(isset($serie)) echo $serie->getTitle() ?>" type="text" required=""
                                                placeholder="Introduce el título" maxlength="250">
                                         <div class="invalid-feedback">Ingrese un título.</div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label" for="platformId">Plataforma</label>
+                                        <label class="form-label" for="platformId">Plataforma <span class="campoRequerido">*</span></label>
                                         <input type="hidden" id="platformArray" value="<?php
                                         if(isset($serie))
                                         {
@@ -123,15 +190,6 @@ require_once('../../controllers/LanguageController.php');
                                         <select id="platformId" name="platformId" class="js-example-basic-single form-control" required="">
                                             <?php
                                                 foreach($platformList as $platform){
-                                                    /**if(isset($serie))
-                                                    {
-                                                        if($serie->getPlatformid() == $platform->getId())
-                                                        {
-                                                            echo  "<option selected='selected' value='".$platform->getId()."'>".$platform->getName()."</option>";
-                                                        }
-                                                        else echo  "<option value='".$platform->getId()."'>".$platform->getName()."</option>";
-                                                    }
-                                                    else*/
                                                         echo  "<option value='".$platform->getId()."'>".$platform->getName()."</option>";
                                                 }
                                             ?>
@@ -139,7 +197,7 @@ require_once('../../controllers/LanguageController.php');
                                         <div class="invalid-feedback">Escoja una plataforma.</div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label" for="directorId">Director</label>
+                                        <label class="form-label" for="directorId">Director <span class="campoRequerido">*</span></label>
                                         <input type="hidden" id="directorArray" value="<?php
                                         if(isset($serie))
                                         {
@@ -149,22 +207,14 @@ require_once('../../controllers/LanguageController.php');
                                         <select id="directorId" name="directorId" class="js-example-basic-single form-control" required="">
                                             <?php
                                             foreach($directorList as $director){
-                                                /**if(isset($serie))
-                                                {
-                                                    if($serie->getDirectorid()==$director->getId())
-                                                    {
-                                                        echo  "<option selected='selected' value='".$director->getId()."'>".$director->getName().' '.$director->getLastName()."</option>";
-                                                    }
-                                                    else echo  "<option value='".$director->getId()."'>".$director->getName().' '.$director->getLastName()."</option>";
-                                                }
-                                                else*/ echo  "<option value='".$director->getId()."'>".$director->getName().' '.$director->getLastName()."</option>";
+                                               echo  "<option value='".$director->getId()."'>".$director->getName().' '.$director->getLastName()."</option>";
                                             }
                                             ?>
                                         </select>
                                         <div class="invalid-feedback">Escoja un director.</div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label" for="actorId">Actor</label>
+                                        <label class="form-label" for="actorId">Actores <span class="campoRequerido">*</span></label>
                                         <input type="hidden" id="actorArray" value="<?php
                                         if(isset($actorListEdit))
                                         {
@@ -187,7 +237,7 @@ require_once('../../controllers/LanguageController.php');
                                         <div class="invalid-feedback">Escoja uno o varios actores.</div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label" for="languageAudioId">Audio</label>
+                                        <label class="form-label" for="languageAudioId">Audios <span class="campoRequerido">*</span></label>
                                         <input type="hidden" id="audioArray" value="<?php
                                         if(isset($audioListEdit))
                                         {
@@ -209,7 +259,7 @@ require_once('../../controllers/LanguageController.php');
                                         <div class="invalid-feedback">Escoja uno a varios audios.</div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label" for="languageSubtituloId">Subtítulo</label>
+                                        <label class="form-label" for="languageSubtituloId">Subtítulos <span class="campoRequerido">*</span></label>
                                         <input type="hidden" id="subtitleArray" value="<?php
                                         if(isset($languageListEdit))
                                         {
@@ -230,8 +280,9 @@ require_once('../../controllers/LanguageController.php');
                                         </select>
                                         <div class="invalid-feedback">Escoja uno o varios idiomas.</div>
                                     </div>
-                                    <div class="col-12">
-                                        <button class="btn btn-primary" name="createBtn" id="createBtn" type="submit">Guardar</button>
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <button class="btn btn-primary" style="margin-right: 4px;" name="createBtn" id="createBtn" type="submit">Guardar</button>
+                                        <a href="List.php" class="btn btn-danger" type="button">Cancelar</a>
                                     </div>
                                 </form>
                                 <?php
@@ -333,6 +384,5 @@ include('../partial/footer.php');
             placeholder: "Seleccione un idioma",
             allowClear: true
         });
-        //$('#platformId').val(null).trigger('change');
     });
 </script>

@@ -26,7 +26,7 @@ include('../partial/sidebar.php');
                         <div class="row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6 text-end pt-2 pe-4">
-                                <a href="Form.php" class="btn btn-primary text-end">Nuevo&nbsp;<i class="bi bi-plus-circle"></i></a>
+                                <a href="Form.php" class="btn btn-primary text-end">Nuevo+</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -75,7 +75,7 @@ include('../partial/sidebar.php');
                                                 <th><?php echo $directorItem->getId(); ?></th>
                                                 <td><?php echo $directorItem->getName(); ?></td>
                                                 <td><?php echo $directorItem->getLastName(); ?></td>
-                                                <td><?php echo $directorItem->getBirthday(); ?></td>
+                                                <td><?php $birthday = date("d/m/Y", strtotime($directorItem->getBirthday())); echo $birthday; ?></td>
                                                 <td><?php echo $directorItem->getNationality(); ?></td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">

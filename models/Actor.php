@@ -18,9 +18,9 @@ class Actor {
         if($id!=null)
             $this->id = $id;
         if($name!=null)
-            $this->name = $name;
+            $this->name = trim($name);
         if($lastname!=null)
-            $this->lastname = $lastname;
+            $this->lastname = trim($lastname);
         if($birthday!=null)
             $this->birthday = $birthday;
         $this->connectionDB = new ConnectionDB();

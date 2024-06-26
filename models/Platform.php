@@ -19,7 +19,7 @@ class Platform {
         if($id!=null)
             $this->id = $id;
         if($name!=null)
-            $this->name = $name;
+            $this->name = trim($name);
         $this->connectionDB = new ConnectionDB();
     }
 
@@ -79,23 +79,31 @@ class Platform {
     public function store()
     {
         $platformCreated = false;
-        $mysqli = $this->connectionDB->initConnectionDb();
-        if($resultInsert = $mysqli->query("insert into platform(name) values('$this->name')"))
+        try {
+            $mysqli = $this->connectionDB->initConnectionDb();
+            if($resultInsert = $mysqli->query("insert into platform(name) values('$this->name')"))
+            {
+                $platformCreated = true;
+            }
+            $mysqli->close();
+        }catch (Exception $ex)
         {
-            $platformCreated = true;
         }
-        $mysqli->close();
         return $platformCreated;
     }
     public function update()
     {
         $platformUpdated = false;
-        $mysqli = $this->connectionDB->initConnectionDb();
-        if($mysqli->query("update platform set name = '$this->name' where id='$this->id'"))
-        {
-            $platformUpdated = true;
+        try{
+            $mysqli = $this->connectionDB->initConnectionDb();
+            if($mysqli->query("update platform set name = '$this->name' where id='$this->id'"))
+            {
+                $platformUpdated = true;
+            }
+            $mysqli->close();
+        }catch (Exception $ex){
+
         }
-        $mysqli->close();
         return $platformUpdated;
     }
     public function delete()

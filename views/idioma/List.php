@@ -30,7 +30,7 @@ include('../partial/sidebar.php');
                         <div class="row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6 text-end pt-2 pe-4">
-                                <a href="Form.php" class="btn btn-primary text-end">Nuevo&nbsp;<i class="bi bi-plus-circle"></i></a>
+                                <a href="Form.php" class="btn btn-primary text-end">Nuevo+</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -82,7 +82,7 @@ include('../partial/sidebar.php');
                                             <td><?php echo $languageItem->getName(); ?></td>
                                             <td><?php echo $languageItem->getIsocode(); ?></td>
                                             <td>
-                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                                     <a href="Form.php?languageId=<?php echo $languageItem->getId();?>" class="btn btn-success">Editar <i class="bi bi-pencil"></i> </a>
                                                     <button class="btn btn-danger ml-1" type="button" data-coreui-toggle="modal" data-coreui-target="#exampleModalCenter<?php echo $languageItem->getId();?>">Borrar <i class="bi bi-trash"></i> </button>
                                                 </div>

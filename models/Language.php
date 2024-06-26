@@ -16,9 +16,9 @@ class Language {
         if($id!=null)
             $this->id = $id;
         if($name!=null)
-            $this->name = $name;
+            $this->name = trim($name);
         if($isocode!=null)
-            $this->isocode = $isocode;
+            $this->isocode = trim($isocode);
         $this->connectionDB = new ConnectionDB();
     }
 
@@ -96,23 +96,31 @@ class Language {
     public function insert()
     {
         $actformCreated = false;
-        $mysqli = $this->connectionDB->initConnectionDb();
-        if($resultInsert = $mysqli->query("insert into language(name,isocode) values('$this->name','$this->isocode')"))
-        {
-            $actformCreated = true;
+        try{
+            $mysqli = $this->connectionDB->initConnectionDb();
+            if($resultInsert = $mysqli->query("insert into language(name,isocode) values('$this->name','$this->isocode')"))
+            {
+                $actformCreated = true;
+            }
+            $mysqli->close();
+        }catch (Exception $ex){
+         $actformCreated = false;
         }
-        $mysqli->close();
         return $actformCreated;
     }
     public function update()
     {
         $actUpdated = false;
-        $mysqli = $this->connectionDB->initConnectionDb();
-        if($mysqli->query("update language set name = '$this->name', isocode = '$this->isocode' where id='$this->id'"))
-        {
-            $actUpdated = true;
+        try {
+            $mysqli = $this->connectionDB->initConnectionDb();
+            if($mysqli->query("update language set name = '$this->name', isocode = '$this->isocode' where id='$this->id'"))
+            {
+                $actUpdated = true;
+            }
+            $mysqli->close();
+        }catch (Exception $ex){
+
         }
-        $mysqli->close();
         return $actUpdated;
     }
     public function delete()

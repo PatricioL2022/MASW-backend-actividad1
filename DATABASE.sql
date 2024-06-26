@@ -63,8 +63,8 @@ insert into language(name,isocode) values
 ('English','en'),
 ('Japanese','ja'),
 ('Russian','ru'),
-('Spanish (Mexico)','es-mx'),
-('Chinese (Hong Kong)','zh-hk'),
+('Spanish Mexico','es-mx'),
+('Chinese Hong Kong','zh-hk'),
 ('Hungarian','hu');
 
 insert into actor(name,lastname,birthday) values
